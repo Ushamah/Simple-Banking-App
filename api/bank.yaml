@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: This is a credit card API
   version: "1.0.0"
-  title:  Credit Card Application API
+  title:  Credit Card ApplicationDto API
   contact:
     email: ushamah.wamala@hcl.com
 
@@ -119,8 +119,8 @@ components:
             type: string
           lastName:
             type: string
-          dob:
-            type: string
+          age:
+            type: integer
           isEmployed:
             type: boolean
           salary:
