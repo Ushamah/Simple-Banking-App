@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  description: This is a credit card API
+  version: "1.0.0"
+  title:  Credit Card Application API
+  contact:
+    email: ushamah.wamala@hcl.com
+
+paths:
+  /applications:
+    get:
+      tags:
+        - credit card application
+      summary: Apply for a credit card
+      description: This endpoint returns all the credit card applications
+      operationId: 'getApplications'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardApplicationsResponse'
+        '400':
+          description: 'Bad Request'
+        '500':
+          description: 'Internal server error'
+    post:
+      tags:
+        - credit card application
+      summary: Apply for a credit card
+      description: This endpoint provides a way to apply for a credit card
+      operationId: 'apply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCardApplicationRequestBody'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardApplicationResponse'
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardErrorResponse'
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardErrorResponse'
+  /applications/{applicationId}:
+    get:
+      summary: Returns the application based on the applicationId
+      operationId: getApplicationById
+      parameters:
+        - name: applicationId
+          in: path
+          description: Used to retrieve the credit card application based on its id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardApplicationRequestBody'
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardErrorResponse'
+        '404':
+          description: 'Not Found'
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardErrorResponse'
+  /applications/{applicationId}/status:
+    get:
+      summary: Returns the the status of an initiated credit card application
+      operationId: getApplicationStatus
+      parameters:
+        - name: applicationId
+          in: path
+          description: Used to retrieve the credit card application
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardApplicationStatusResponse'
+        '404':
+          description: 'Bad Request'
+        '500':
+          description: 'Internal Server Error'
+
+components:
+  schemas:
+    CreditCardApplicationRequestBody:
+        type: object
+        properties:
+          firstName:
+            type: string
+          lastName:
+            type: string
+          dob:
+            type: string
+          isEmployed:
+            type: boolean
+          salary:
+            type: integer
+          panNumber:
+            type: integer
+    CreditCardApplicationResponse:
+        type: object
+        properties:
+          applicationId:
+            type: integer
+    CreditCardErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        requestId:
+          type: integer
+    CreditCardApplicationStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    CreditCardApplicationsResponse:
+      properties:
+        creditCardApplications:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditCardApplicationRequestBody'
