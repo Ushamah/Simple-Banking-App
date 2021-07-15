@@ -1,5 +1,6 @@
 package com.ushwamala.simplebankingapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -50,10 +52,16 @@ public class Applicant {
     @Column(name = "pan_number")
     private int panNumber;
 
+    //https://www.baeldung.com/jpa-joincolumn-vs-mappedby
     @OneToMany(mappedBy = "applicant",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private List<Application> applications;
+            fetch = FetchType.LAZY)
+    private List<Application> applications = new ArrayList<>();
 
+    public void addApplication(Application tempApplication){
+        if(applications == null){
+            applications = new ArrayList<>();
+        }
+        applications.add(tempApplication);
+    }
 }

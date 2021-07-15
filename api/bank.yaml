@@ -132,6 +132,8 @@ components:
         properties:
           applicationId:
             type: integer
+          status:
+            $ref: '#/components/schemas/CreditCardApplicationStatusResponse'
     CreditCardErrorResponse:
       type: object
       properties:

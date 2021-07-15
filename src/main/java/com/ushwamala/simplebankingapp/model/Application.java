@@ -39,7 +39,9 @@ public class Application {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="applicant_id", nullable = false)
+    //https://www.baeldung.com/jpa-joincolumn-vs-mappedby
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
-}
+
+   }

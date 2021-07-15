@@ -1,6 +1,6 @@
 package com.ushwamala.simplebankingapp.controller;
 
-import com.ushwamala.simplebankingapp.api.ApplicationsApi;
+import com.ushwamala.simplebankingapp.api.ApplicationsApiDelegate;
 import com.ushwamala.simplebankingapp.dto.ApplicationDto;
 import com.ushwamala.simplebankingapp.model.CreditCardApplicationRequestBody;
 import com.ushwamala.simplebankingapp.model.CreditCardApplicationResponse;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ApplicationController implements ApplicationsApi {
+public class ApplicationController implements ApplicationsApiDelegate {
 
     private final ApplicationService applicationService;
 
