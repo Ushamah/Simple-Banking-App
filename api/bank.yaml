@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: This is a credit card API
   version: "1.0.0"
-  title:  Credit Card ApplicationDto API
+  title: Credit Card ApplicationDto API
   contact:
     email: ushamah.wamala@hcl.com
 
@@ -72,7 +72,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditCardApplicationRequestBody'
+                $ref: '#/components/schemas/ApplicationDto'
         '400':
           description: 'Bad Request'
           content:
@@ -81,6 +81,10 @@ paths:
                 $ref: '#/components/schemas/CreditCardErrorResponse'
         '404':
           description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationNotFoundResponse'
         '500':
           description: 'Internal Server Error'
           content:
@@ -113,27 +117,27 @@ paths:
 components:
   schemas:
     CreditCardApplicationRequestBody:
-        type: object
-        properties:
-          firstName:
-            type: string
-          lastName:
-            type: string
-          age:
-            type: integer
-          isEmployed:
-            type: boolean
-          salary:
-            type: integer
-          panNumber:
-            type: integer
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: integer
+        isEmployed:
+          type: boolean
+        salary:
+          type: integer
+        panNumber:
+          type: integer
     CreditCardApplicationResponse:
-        type: object
-        properties:
-          applicationId:
-            type: integer
-          status:
-            $ref: '#/components/schemas/CreditCardApplicationStatusResponse'
+      type: object
+      properties:
+        applicationId:
+          type: integer
+        status:
+          $ref: '#/components/schemas/CreditCardApplicationStatusResponse'
     CreditCardErrorResponse:
       type: object
       properties:
@@ -152,3 +156,104 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreditCardApplicationRequestBody'
+    ApplicationDto:
+      properties:
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        applicant:
+          $ref: '#/components/schemas/ApplicantDto'
+    ApplicationNotFoundResponse:
+      properties:
+        message:
+          type: string
+    ApplicantDto:
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+        userpPassword:
+          type: string
+        account:
+          $ref: '#/components/schemas/Account'
+    Account:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+        balance:
+          type: integer
+        outstandingBalance:
+            type: integer
+        statement:
+          $ref: '#/components/schemas/AccountStatement'
+    AccountType:
+      type: object
+      properties:
+        accountType:
+          type: string
+    AccountStatement:
+      type: object
+      properties:
+        comment:
+          type: string
+        amount:
+          type: integer
+        date:
+          type: string
+          format: date-time
+    Operation:
+      type: object
+      properties:
+        objectType:
+          type: string
+        objectCost:
+          type: integer
+        doposit:
+          type: integer
+        applicants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Applicant'
+    Applicant:
+      type: object
+      properties:
+        firstName:
+          type: string
+        middleName:
+          type: string
+        surName:
+          type: string
+        dob:
+          type: string
+          format: date
+        isEmployed:
+          type: boolean
+        occupation:
+          type: string
+        contractType:
+          type: string
+        salary:
+          type: integer
+        jobStartDate:
+          type: string
+          format: date
+        phoneNumber:
+          type: string
+          pattern: '\(?\+\(?49\)?[ ()]?([- ()]?\d[- ()]?){10}'
+        email:
+          type: string
+          format: email
+        confirmEmail:
+          type: string
+          format: email

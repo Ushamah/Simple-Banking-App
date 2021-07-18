@@ -1,7 +1,7 @@
 package com.ushwamala.simplebankingapp.controller;
 
 import com.ushwamala.simplebankingapp.api.ApplicationsApiDelegate;
-import com.ushwamala.simplebankingapp.dto.ApplicationDto;
+import com.ushwamala.simplebankingapp.model.ApplicationDto;
 import com.ushwamala.simplebankingapp.model.CreditCardApplicationRequestBody;
 import com.ushwamala.simplebankingapp.model.CreditCardApplicationResponse;
 import com.ushwamala.simplebankingapp.service.ApplicationService;
@@ -22,9 +22,17 @@ public class ApplicationController implements ApplicationsApiDelegate {
     @Override
     public ResponseEntity<CreditCardApplicationResponse> apply(
             CreditCardApplicationRequestBody body) {
-        ApplicationDto applicationDto = applicationService.submitApplication(body);
-        CreditCardApplicationResponse response = new CreditCardApplicationResponse();
-        response.setApplicationId(applicationDto.getApplication().getId());
+        CreditCardApplicationResponse response = applicationService.submitApplication(body);
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    public ResponseEntity<ApplicationDto> getApplicationById(Integer id) {
+        ApplicationDto response = applicationService.findApplicationById(id);
+        if (response == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }
