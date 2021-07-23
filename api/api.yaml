@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  description: This is a mortgage API
+  version: "1.0.0"
+  title: Mortgage Application API
+  contact:
+    email: ushamah.wamala@hcl.com
+
+paths:
+  /mortgages:
+    post:
+      tags:
+        - mortgage application
+      summary: Apply for a mortgage
+      description: This endpoint provides a way to apply for a mortgage
+      operationId: 'apply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MortgageApplicationRequest'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MortgageApplicationOkResponse'
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    EmailResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    MortgageApplicationRequest:
+      type: object
+      properties:
+        operation:
+          $ref: '#/components/schemas/Operation'
+    MortgageApplicationOkResponse:
+      type: object
+      properties:
+        loginId:
+          type: string
+        accountNumber:
+          type: string
+        mortgageNumber:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+        userpPassword:
+          type: string
+        account:
+          $ref: '#/components/schemas/Account'
+    Account:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+        balance:
+          type: integer
+        outstandingBalance:
+            type: integer
+        statement:
+          $ref: '#/components/schemas/AccountStatement'
+    AccountType:
+      type: object
+      properties:
+        accountType:
+          type: string
+    AccountStatement:
+      type: object
+      properties:
+        comment:
+          type: string
+        amount:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+    Operation:
+      type: object
+      properties:
+        objectType:
+          type: string
+        objectCost:
+          type: integer
+        doposit:
+          type: integer
+        applicants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Applicant'
+    Applicant:
+      type: object
+      properties:
+        title:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        surName:
+          type: string
+        dob:
+          type: string
+          format: date
+        isEmployed:
+          type: boolean
+        occupation:
+          type: string
+        contractType:
+          type: string
+        salary:
+          type: integer
+        jobStartDate:
+          type: string
+          format: date
+        phoneNumber:
+          type: string
+          pattern: '\(?\+\(?49\)?[ ()]?([- ()]?\d[- ()]?){10}'
+        email:
+          type: string
+          format: email
+        confirmEmail:
+          type: string
+          format: email

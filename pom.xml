@@ -112,6 +112,22 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -138,7 +154,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/api/bank.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/api/api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>com.ushwamala.simplebankingapp.api</apiPackage>
                             <modelPackage>com.ushwamala.simplebankingapp.model</modelPackage>

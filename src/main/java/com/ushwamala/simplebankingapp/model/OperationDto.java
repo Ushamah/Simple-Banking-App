@@ -1,25 +1,25 @@
 package com.ushwamala.simplebankingapp.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "items")
-public class Item {
+public class OperationDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String name;
-    private int price;
-    private int quantity;
-
-    @Transient
-    private int value;
+    private int objectCost;
+    private int deposit;
+    private List<ApplicantDto> applicantDtoList;
 }
